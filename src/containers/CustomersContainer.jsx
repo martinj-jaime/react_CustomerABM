@@ -1,62 +1,60 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import AppFrame from '../components/AppFrame'
-import CustomersList from '../components/CustomersList'
-import CustomersActions from '../components/CustomersActions'
+import AppFrame from './../components/AppFrame';
+import CustomersList from './../components/CustomersList';
+import CustomersActions from './../components/CustomersActions';
+import { fetchCustomers } from './../actions/fetchCustomers';
 
-const customers = [
-    {   
-        'dni': '27000000',
-        'name': 'Juan Perez',
-        'age': 37
-    },
-    {
-        'dni': '30000000',
-        'name': 'Luis Martinez',
-        'age': 35
-    },
-    {
-        'dni': '33000000',
-        'name': 'Otro',
-        'age': 32
+import { getCustomers } from './../selectors/customers';
+
+class CustomersContainer extends Component {
+
+    componentDidMount() {
+        if (this.props.customers.length === 0) {
+            this.props.fetchCustomers();
+        }
     }
-]
-
-const CustomersContainer = props => {
-    const navigate = useNavigate()
-
-    const onClickHandleAddNew = () => {
-        navigate('/customers/new')
+    
+    handleAddNew = () => {
+        useNavigate('/customers/new');
     }
 
-    const renderBody = customers => (
-        <>
-        <CustomersList 
-        customers={customers} 
-        urlPath={'customer/'} 
-        />
-        <CustomersActions>
-            <button onClick={onClickHandleAddNew} >
-                Nuevo Cliente
-            </button>
-        </CustomersActions>
-        </>
+    renderBody = customers => (
+        <div>
+            <CustomersList 
+                customers={customers} 
+                urlPath={'customers/'} >
+            </CustomersList>
+            <CustomersActions>
+                <button onClick={this.handleAddNew}>Nuevo Cliente</button>
+            </CustomersActions>
+        </div>
     )
 
-  return (
-    <div>
-        <AppFrame
-        header='Listado de Clientes'
-        body={
-            renderBody(customers)
-        }
-        />
-    </div>
-  )
+    render() {
+        return (
+            <div>
+                <AppFrame header={'Listado de clientes'}
+                    body={this.renderBody(this.props.customers)}></AppFrame>
+            </div>
+        );
+    }
 }
 
-CustomersContainer.propTypes = {}
+CustomersContainer.propTypes = {
+    fetchCustomers: PropTypes.func.isRequired,
+    customers: PropTypes.array.isRequired,
+};
 
-export default CustomersContainer
+CustomersContainer.defaultProps = {
+    customers:  [ ]    
+};
+
+const mapStateToProps = state => ({
+    customers: getCustomers(state)
+});
+
+export default connect(mapStateToProps, { fetchCustomers })(CustomersContainer);
