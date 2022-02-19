@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import AppFrame from './../components/AppFrame';
@@ -19,7 +19,7 @@ class CustomersContainer extends Component {
     }
     
     handleAddNew = () => {
-        useNavigate('/customers/new');
+        this.props.history.push('/customers/new');
     }
 
     renderBody = customers => (
@@ -57,4 +57,4 @@ const mapStateToProps = state => ({
     customers: getCustomers(state)
 });
 
-export default connect(mapStateToProps, { fetchCustomers })(CustomersContainer);
+export default withRouter(connect(mapStateToProps, { fetchCustomers })(CustomersContainer));
