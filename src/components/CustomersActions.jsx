@@ -14,7 +14,7 @@ const CustomersActions = ({ children }) => {
 }
 
 CustomersActions.propTypes = {
-    // children: PropTypes.number.isRequired
+    children: PropTypes.node
 }
 
 export default CustomersActions

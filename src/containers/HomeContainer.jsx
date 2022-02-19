@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import AppFrame from '../components/AppFrame'
 import CustomersActions from '../components/CustomersActions'
@@ -31,10 +30,6 @@ const HomeContainer = props => {
         <Link to='/customers' >Listado de Clientes</Link> */}
     </div>
   )
-}
-
-HomeContainer.propTypes = {
-
 }
 
 export default HomeContainer
