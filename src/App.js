@@ -1,15 +1,23 @@
 import React from 'react'
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css';
+
+import HomeContainer from './containers/HomeContainer'
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Router>
-        <Link to='/customers'>Customers</Link>
-        <Link to='/customers/30000000'>Customers</Link>
+        <Routes>
+          <Route path='/' element={<HomeContainer/>} />
+          <Route path='/customers' element={<HomeContainer/>} />
+          {/* <Route path='/customers/:id' element={onRender()} />
+          <Route path='/customers/:id/edit' element={onRender()} />
+          <Route path='/customers/new' element={onRender()} /> */}
+        </Routes>
+
       </Router>
-    </div>
+    </>
   );
 }
 

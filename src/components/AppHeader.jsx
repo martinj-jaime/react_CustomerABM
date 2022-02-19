@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 const AppHeader = props => {
   return (
     <div>
-        <dis className="app-header">
+        <div className="app-header">
             <h1> {props.title} </h1>
-        </dis>
+        </div>
     </div>
   )
 }
