@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
 import { Prompt } from 'react-router-dom'
@@ -29,31 +29,57 @@ const validate = values => {
   return error
 }
 
-const MyField = ({ input, meta, type, label, name }) => (
-  <div>
-    <label htmlFor={name} > {label} </label>
-    <input {...input} type={!type ? 'text' : type} ></input>
-      {
-        meta.touched && meta.error && <span> {meta.error} </span>
-      }
-  </div>
-)
-
 const toNumber = value => ( value && Number(value) )
 
-const CustomerEdit = ({ 
-  name, dni, age, handleSubmit, submitting, 
-  onBack, pristine, submitSucceed }) => {
-  return (
+class CustomerEdit extends Component { 
+
+  componentDidMount() {
+    if(this.txt) {
+      this.txt.focus()
+    }
+  }
+
+  renderMyField = ({ input, meta, type, label, name, withFocus }) => {
+    const controls = { ...input, value: input['value'] || '' }
+    
+    return (
+      <div>
+        <label htmlFor={name} > {label} </label>
+        <input 
+          {...controls} 
+          type={!type ? 'text' : type} 
+          ref={withFocus && (txt => this.txt = txt)}
+        />
+        {
+          meta.touched && meta.error && <span> {meta.error} </span>
+        }
+      </div>
+    )
+  }
+
+  render() {
+    const { handleSubmit, submitting, 
+    onBack, pristine, submitSucceed } = this.props 
+    return (
     <>
         <h2>Edit Client</h2>
+        {/* <input type="text" ref={txt => this.txt = txt} /> */}
         <form onSubmit={handleSubmit} >
-          <Field name='name' label='Name' component={MyField} 
-            type='text' validate={isRequired} ></Field>
-          <Field name='dni' label='Dni' component={MyField}  
-            type='text' validate={[isRequired, isNumber]} ></Field>         
-          <Field name='age' label='Age' component={MyField}  
-            type='number' validate={isNumber} parse={toNumber} ></Field>         
+          <Field 
+            name='name' label='Name' component={this.renderMyField} 
+            type='text' validate={isRequired} withFocus // withFocus = true
+          >
+          </Field>
+          <Field 
+            name='dni' label='Dni' component={this.renderMyField}  
+            type='text' validate={[isRequired, isNumber]} 
+          >
+          </Field>         
+          <Field 
+            name='age' label='Age' component={this.renderMyField}  
+            type='number' validate={isNumber} parse={toNumber} 
+          >
+          </Field>         
           <CustomersActions>
             <button type='submit' disabled={submitting || pristine} >
               Aceptar
@@ -69,7 +95,8 @@ const CustomerEdit = ({
         </form>
         {/* <h3>Nombre: {name} / DNI: {dni} / Age: {age} </h3> */}
     </>
-  )
+    )
+  }
 }
 
 CustomerEdit.propTypes = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import CustomersActions from './CustomersActions'
 
-const CustomerData = ({ name, dni, age, onBack }) => {
+const CustomerData = ({ name, dni, age, onBack, isDeleteAllow, onDelete }) => {
   return (
     <>
         <div className="customer-data">
@@ -19,6 +19,10 @@ const CustomerData = ({ name, dni, age, onBack }) => {
             </div>
             <CustomersActions>
                 <button onClick={onBack} type='button' >Back</button>
+                {
+                    isDeleteAllow && 
+                    <button type='button' onClick={onDelete} >Eliminar</button>
+                }
             </CustomersActions>
         </div>
     </>
@@ -29,7 +33,9 @@ CustomerData.propTypes = {
     name: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
     age: PropTypes.number,
-    onBack: PropTypes.func.isRequired
+    onBack: PropTypes.func.isRequired,
+    isDeleteAllow: PropTypes.bool,
+    onDelete: PropTypes.func,
 }
 
 export default CustomerData
