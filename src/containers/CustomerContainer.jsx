@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, withRouter } from 'react-router-dom'
+import { SubmissionError } from 'redux-form'
 
 import { fetchCustomers } from '../actions/fetchCustomers'
 import { updateCustomer } from '../actions/updateCustomer'
@@ -26,11 +27,19 @@ class CustomerContainer extends Component {
     handleSubmit = values => {
       // console.log(JSON.stringify(values))
       const { id } = values
-      this.props.updateCustomer(id, values)
+      return this.props.updateCustomer(id, values)
+      .then(r => {
+        if(r.error && r.payload.error) { // r.error
+          throw new SubmissionError(r.payload.error) // r.payload
+        }
+      })
+    }
+
+    handleOnSubmitSuccess = () => {
+      this.props.history.goBack()
     }
 
     handleOnBack = () => {
-      console.log('algo')
       this.props.history.goBack()
     }
 
@@ -43,6 +52,7 @@ class CustomerContainer extends Component {
           return (
             <CustomerControl {...this.props.customer} 
             onSubmit={this.handleSubmit} 
+            onSubmitSuccess={this.handleOnSubmitSuccess}
             onBack={this.handleOnBack}
             />
           ) 

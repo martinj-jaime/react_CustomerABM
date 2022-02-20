@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
+import { Prompt } from 'react-router-dom'
 // import { connect } from 'react-redux'
 import { setPropsAsInitial } from '../helpers/setPropsAsInitial'
 import CustomersActions from './CustomersActions'
@@ -38,7 +39,11 @@ const MyField = ({ input, meta, type, label, name }) => (
   </div>
 )
 
-const CustomerEdit = ({ name, dni, age, handleSubmit, submitting, onBack }) => {
+const toNumber = value => ( value && Number(value) )
+
+const CustomerEdit = ({ 
+  name, dni, age, handleSubmit, submitting, 
+  onBack, pristine, submitSucceed }) => {
   return (
     <>
         <h2>Edit Client</h2>
@@ -48,11 +53,19 @@ const CustomerEdit = ({ name, dni, age, handleSubmit, submitting, onBack }) => {
           <Field name='dni' label='Dni' component={MyField}  
             type='text' validate={[isRequired, isNumber]} ></Field>         
           <Field name='age' label='Age' component={MyField}  
-            type='number' validate={isNumber} ></Field>         
+            type='number' validate={isNumber} parse={toNumber} ></Field>         
           <CustomersActions>
-            <button type='submit' disabled={submitting} >Aceptar</button>
-            <button onClick={onBack} type='button' >Cancelar</button>
+            <button type='submit' disabled={submitting || pristine} >
+              Aceptar
+            </button>
+            <button onClick={onBack} type='button' disabled={submitting} >
+              Cancelar
+            </button>
           </CustomersActions>
+          <Prompt
+          when={!pristine && !submitSucceed}
+          message='Se perderan los datos si continua'
+          ></Prompt>
         </form>
         {/* <h3>Nombre: {name} / DNI: {dni} / Age: {age} </h3> */}
     </>
