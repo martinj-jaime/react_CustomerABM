@@ -38,7 +38,7 @@ const MyField = ({ input, meta, type, label, name }) => (
   </div>
 )
 
-const CustomerEdit = ({ name, dni, age, handleSubmit, submitting }) => {
+const CustomerEdit = ({ name, dni, age, handleSubmit, submitting, onBack }) => {
   return (
     <>
         <h2>Edit Client</h2>
@@ -51,6 +51,7 @@ const CustomerEdit = ({ name, dni, age, handleSubmit, submitting }) => {
             type='number' validate={isNumber} ></Field>         
           <CustomersActions>
             <button type='submit' disabled={submitting} >Aceptar</button>
+            <button onClick={onBack} type='button' >Cancelar</button>
           </CustomersActions>
         </form>
         {/* <h3>Nombre: {name} / DNI: {dni} / Age: {age} </h3> */}
@@ -62,6 +63,7 @@ CustomerEdit.propTypes = {
     name: PropTypes.string,
     dni: PropTypes.string,
     age: PropTypes.number,
+    onBack: PropTypes.func.isRequired
 }
 
 export default setPropsAsInitial(
