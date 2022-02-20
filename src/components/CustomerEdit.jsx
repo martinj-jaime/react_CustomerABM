@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
 import { Prompt } from 'react-router-dom'
 // import { connect } from 'react-redux'
+import { CUSTOMER_EDIT } from '../constants/permissions'
 import { setPropsAsInitial } from '../helpers/setPropsAsInitial'
+import { accessControl } from '../helpers/accessControl'
+
 import CustomersActions from './CustomersActions'
 
 // field validation (have priority)
@@ -106,7 +109,6 @@ CustomerEdit.propTypes = {
     onBack: PropTypes.func.isRequired
 }
 
-export default setPropsAsInitial(
-  reduxForm({ form: 'CustomerEdit', validate })
-  (CustomerEdit)
-)
+const CustomerEditForm = reduxForm({ form: 'CustomerEdit', validate })(CustomerEdit)
+
+export default accessControl([CUSTOMER_EDIT])(setPropsAsInitial(CustomerEditForm))
