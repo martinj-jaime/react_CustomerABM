@@ -1,14 +1,32 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
 // import { useParams } from 'react-router-dom'
+
 import { getCustomerByDni } from '../selectors/customers'
 
 import AppFrame from '../components/AppFrame'
+import CustomerEdit from '../components/CustomerEdit'
+import CustomerData from '../components/CustomerData'
 
 class CustomerContainer extends Component {
     // DUDA  //
     // const params = useParams()
+
+    /*
+    <p>Datos del Cliente</p>
+    <p> {this.props.customer.name} </p>
+    */
+   renderBody = () => (
+     <Route path='/customers/:dni/edit' children={
+      ({ match }) => {
+        const CustomerControl = match ? CustomerEdit : CustomerData;
+        return (<CustomerControl {...this.props.customer} />) 
+      }
+     } 
+     />
+   )
 
   render() {  
     return (
@@ -16,10 +34,7 @@ class CustomerContainer extends Component {
         <AppFrame
         header={`Cliente ${this.props.dni} `}
         body={
-          <>
-            <p>Datos del Cliente</p>
-            <p> {this.props.customer.name} </p>
-          </>
+          this.renderBody(this.props.dni,this.props.customer.name)
         }
         >
         </AppFrame>
