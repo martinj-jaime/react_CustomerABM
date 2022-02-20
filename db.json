@@ -17,6 +17,18 @@
       "dni": "33000000",
       "name": "elfacu",
       "age": 53
+    },
+    {
+      "name": "Martin",
+      "dni": "99999111",
+      "age": 36,
+      "id": "9CkthWC"
+    },
+    {
+      "name": "Ramiro",
+      "dni": "55555000",
+      "age": 15,
+      "id": "R8OhUVJ"
     }
   ],
   "posts": [
