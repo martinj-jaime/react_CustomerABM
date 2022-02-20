@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-// import { useParams } from 'react-router-dom'
 
 import { getCustomerByDni } from '../selectors/customers'
 
@@ -14,15 +13,12 @@ class CustomerContainer extends Component {
     // DUDA  //
     // const params = useParams()
 
-    /*
-    <p>Datos del Cliente</p>
-    <p> {this.props.customer.name} </p>
-    */
    renderBody = () => (
      <Route path='/customers/:dni/edit' children={
       ({ match }) => {
         const CustomerControl = match ? CustomerEdit : CustomerData;
-        return (<CustomerControl {...this.props.customer} />) 
+        return (<CustomerControl  />) 
+        // initialValues={this.props.customer}
       }
      } 
      />
