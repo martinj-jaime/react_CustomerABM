@@ -12,27 +12,6 @@ import CustomerEdit from '../components/CustomerEdit'
 
 class NewCustomerContainer extends Component {
 
-    /*
-    handleSubmit = values => {
-        // console.log(JSON.stringify(values))
-        const { id } = values
-        return this.props.updateCustomer(id, values)
-        .then(r => {
-          if(r.error && r.payload.error) { // r.error
-            throw new SubmissionError(r.payload.error) // r.payload
-          }
-        })
-    }
-  
-    handleOnSubmitSuccess = () => {
-        this.props.history.goBack()
-    }
-  
-    handleOnBack = () => {
-        this.props.history.goBack()
-    }
-    */
-
     handleSubmit = values => {
         return this.props.insertCustomer(values)
         .then(r => {
