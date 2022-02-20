@@ -7,28 +7,10 @@
       "age": 41
     },
     {
-      "id": "30000000",
-      "dni": "30000001",
-      "name": "Luis Martinez",
-      "age": 33
-    },
-    {
       "id": "33000000",
       "dni": "33000000",
       "name": "elfacu22",
       "age": 53
-    },
-    {
-      "name": "Martin212",
-      "dni": "99999111",
-      "age": 36,
-      "id": "9CkthWC"
-    },
-    {
-      "name": "Ramiro",
-      "dni": "55555000",
-      "age": 15,
-      "id": "R8OhUVJ"
     }
   ],
   "posts": [
